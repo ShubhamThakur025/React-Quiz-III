@@ -5,7 +5,7 @@ import QuizComponent from './QuizComponent'
 
 export default function ResultComponent() {
     const score = localStorage.getItem('score')
-    const attempted = localStorage.getItem('attempted')
+    let attempted = localStorage.getItem('attempted')
     const remarks = (percent) => {
         switch (true) {
             case percent <= 30:

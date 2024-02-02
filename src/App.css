@@ -76,6 +76,7 @@ button{
   height: 3vw;
   padding: .3vw 2vw;
   border: none;
+  cursor: pointer;
 }
 #prev-btn{
   background-color: rgb(62,126,170);
@@ -85,6 +86,11 @@ button{
 }
 #quit-btn{
   background-color: red;
+}
+#finish-btn{
+  background-color: white;
+  color: rgb(87, 87, 87);
+  border: 2px solid rgb(185, 185, 185);
 }
 .btns{
   display: flex;

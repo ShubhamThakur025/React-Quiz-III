@@ -3,68 +3,34 @@ import questions from '../questions.json'
 import ResultComponent from './ResultComponent'
 import HomeComponent from './HomeComponent'
 import { Link } from 'react-router-dom'
-// export default class QuizComponent extends Component {
-//     constructor(props) {
-//         super(props)
-//         this.state = {
-//             questionNo: 0,
-//             score: 0,
-//             attempted: 0
-//         }
-//     }
-//     // to handle the accuracy and question numbers
-
-
-//     //to move to the next question
-//     moveToNext = () => {
-//         if (this.state.questionNo < questions.length - 1) {
-//             this.setState(prevState => ({
-//                 questionNo: prevState.questionNo + 1
-//             }))
-//         }
-//         else {
-//             this.props.handleClick(this.state.score, this.state.attempted)
-//         }
-//     }
-
-//     //to move back to previous question
-//     moveToPrev = () => {
-//         if (this.state.questionNo < questions.length - 1) {
-//             this.setState(prevState => ({
-//                 questionNo: prevState.questionNo - 1,
-//                 attempted: prevState.attempted - 1
-//             }))
-//         }
-//     }
-
-//     //to quit the game
-//     checkOut = () =>{
-//         let quit = window.confirm("Are you sure you want to quit ?")
-//         if(quit){this.props.handleClick(this.state.score, this.state.attempted)}
-//         else{return}
-//     }
-//     render() {
-//         return (
-
-//         )s
-//     }
-// }
-
 
 function QuizComponent() {
     const [questionNo, changeQuestion] = useState(0)
     const [score, setScore] = useState(0)
     const [attempted, setAttempted] = useState(0)
+    localStorage.setItem('score', score)
+    localStorage.setItem('attempted', attempted)
 
     const checkAns = (ans) => {
         if (questions[questionNo].answer === ans) {
+            window.alert("Right Answer!")
             setScore(score + 1)
-            setAttempted(attempted + 1)
             localStorage.setItem('score', score)
-            localStorage.setItem('attempted', attempted)
+
         }
+        else {
+            window.alert("Wrong Answer!")
+        }
+        setAttempted(attempted + 1)
+        if (attempted == 4) { window.alert("Press Finish to end the quiz!") }
+        localStorage.setItem('attempted', attempted)
         questionNo < questions.length - 1 && changeQuestion(questionNo + 1)
 
+    }
+
+    const handleQuit = () => {
+        let isConfirmed = confirm("You really want to quit?")
+        if (isConfirmed) location.href = '/'
     }
     const currentQuestion = questions[questionNo]
 
@@ -83,12 +49,10 @@ function QuizComponent() {
                 </div>
                 <div className="btns">
                     <button id='prev-btn' disabled={questionNo === 0} onClick={() => changeQuestion(questionNo - 1)}>Previous</button>
-                    <button id='next-btn' onClick={() => changeQuestion(questionNo + 1)}>Next</button>
-                    <Link to="/">
-                        <button id='quit-btn'>Quit</button>
-                    </Link>
+                    <button id='next-btn' disabled={questionNo === 4} onClick={() => changeQuestion(questionNo + 1)}>Next</button>
+                    <button id='quit-btn' onClick={handleQuit}>Quit</button>
                     <Link to="/ResultComponent">
-                        <button id="quit-btn">Finish</button>
+                        <button id="finish-btn">Finish</button>
                     </Link>
 
 
